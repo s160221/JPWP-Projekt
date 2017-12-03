@@ -30,6 +30,18 @@
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panel5 = new System.Windows.Forms.Panel();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.panel10 = new System.Windows.Forms.Panel();
+            this.panel9 = new System.Windows.Forms.Panel();
+            this.panel8 = new System.Windows.Forms.Panel();
+            this.panel7 = new System.Windows.Forms.Panel();
+            this.panel6 = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
             this.tableLayoutPanel10 = new System.Windows.Forms.TableLayoutPanel();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.label10 = new System.Windows.Forms.Label();
@@ -65,6 +77,8 @@
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.tableLayoutPanel10.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
@@ -91,6 +105,7 @@
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer1.IsSplitterFixed = true;
             this.splitContainer1.Location = new System.Drawing.Point(0, 0);
             this.splitContainer1.Name = "splitContainer1";
             this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
@@ -119,15 +134,161 @@
             // 
             this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.IsSplitterFixed = true;
             this.splitContainer2.Location = new System.Drawing.Point(0, 0);
             this.splitContainer2.Name = "splitContainer2";
             // 
             // splitContainer2.Panel1
             // 
-            //this.splitContainer2.Panel1.AllowDrop = true;
+            this.splitContainer2.Panel1.Controls.Add(this.panel5);
+            this.splitContainer2.Panel1.Controls.Add(this.panel4);
+            this.splitContainer2.Panel1.Controls.Add(this.panel3);
+            this.splitContainer2.Panel1.Controls.Add(this.panel2);
+            this.splitContainer2.Panel1.Controls.Add(this.panel1);
+            this.splitContainer2.Panel1.Controls.Add(this.label11);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.panel10);
+            this.splitContainer2.Panel2.Controls.Add(this.panel9);
+            this.splitContainer2.Panel2.Controls.Add(this.panel8);
+            this.splitContainer2.Panel2.Controls.Add(this.panel7);
+            this.splitContainer2.Panel2.Controls.Add(this.panel6);
+            this.splitContainer2.Panel2.Controls.Add(this.label12);
             this.splitContainer2.Size = new System.Drawing.Size(1264, 639);
             this.splitContainer2.SplitterDistance = 617;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // panel5
+            // 
+            this.panel5.AllowDrop = true;
+            this.panel5.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel5.Location = new System.Drawing.Point(196, 278);
+            this.panel5.Name = "panel5";
+            this.panel5.Size = new System.Drawing.Size(200, 148);
+            this.panel5.TabIndex = 2;
+            this.panel5.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel5_DragDrop);
+            this.panel5.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel5_DragEnter);
+            // 
+            // panel4
+            // 
+            this.panel4.AllowDrop = true;
+            this.panel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel4.Location = new System.Drawing.Point(374, 455);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(200, 148);
+            this.panel4.TabIndex = 4;
+            this.panel4.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel4_DragDrop);
+            this.panel4.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel4_DragEnter);
+            // 
+            // panel3
+            // 
+            this.panel3.AllowDrop = true;
+            this.panel3.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel3.Location = new System.Drawing.Point(30, 455);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(200, 148);
+            this.panel3.TabIndex = 3;
+            this.panel3.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel3_DragDrop);
+            this.panel3.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel3_DragEnter);
+            // 
+            // panel2
+            // 
+            this.panel2.AllowDrop = true;
+            this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel2.Location = new System.Drawing.Point(374, 107);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(200, 148);
+            this.panel2.TabIndex = 2;
+            this.panel2.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel2_DragDrop);
+            this.panel2.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel2_DragEnter);
+            // 
+            // panel1
+            // 
+            this.panel1.AllowDrop = true;
+            this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel1.Location = new System.Drawing.Point(30, 107);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(200, 148);
+            this.panel1.TabIndex = 1;
+            this.panel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel1_DragDrop);
+            this.panel1.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel1_DragEnter);
+            this.panel1.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.panel1_QueryContinueDrag);
+            // 
+            // label11
+            // 
+            this.label11.Font = new System.Drawing.Font("Arial Narrow", 30F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label11.Location = new System.Drawing.Point(173, 7);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(291, 86);
+            this.label11.TabIndex = 0;
+            this.label11.Text = "OWOCE";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // panel10
+            // 
+            this.panel10.AllowDrop = true;
+            this.panel10.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel10.Location = new System.Drawing.Point(224, 278);
+            this.panel10.Name = "panel10";
+            this.panel10.Size = new System.Drawing.Size(200, 148);
+            this.panel10.TabIndex = 6;
+            this.panel10.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel10_DragDrop);
+            this.panel10.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel10_DragEnter);
+            // 
+            // panel9
+            // 
+            this.panel9.AllowDrop = true;
+            this.panel9.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel9.Location = new System.Drawing.Point(411, 455);
+            this.panel9.Name = "panel9";
+            this.panel9.Size = new System.Drawing.Size(200, 148);
+            this.panel9.TabIndex = 5;
+            this.panel9.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel9_DragDrop);
+            this.panel9.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel9_DragEnter);
+            // 
+            // panel8
+            // 
+            this.panel8.AllowDrop = true;
+            this.panel8.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel8.Location = new System.Drawing.Point(40, 455);
+            this.panel8.Name = "panel8";
+            this.panel8.Size = new System.Drawing.Size(200, 148);
+            this.panel8.TabIndex = 4;
+            this.panel8.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel8_DragDrop);
+            this.panel8.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel8_DragEnter);
+            // 
+            // panel7
+            // 
+            this.panel7.AllowDrop = true;
+            this.panel7.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel7.Location = new System.Drawing.Point(411, 107);
+            this.panel7.Name = "panel7";
+            this.panel7.Size = new System.Drawing.Size(200, 148);
+            this.panel7.TabIndex = 3;
+            this.panel7.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel7_DragDrop);
+            this.panel7.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel7_DragEnter);
+            // 
+            // panel6
+            // 
+            this.panel6.AllowDrop = true;
+            this.panel6.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.panel6.Location = new System.Drawing.Point(40, 107);
+            this.panel6.Name = "panel6";
+            this.panel6.Size = new System.Drawing.Size(200, 148);
+            this.panel6.TabIndex = 2;
+            this.panel6.DragDrop += new System.Windows.Forms.DragEventHandler(this.panel6_DragDrop);
+            this.panel6.DragEnter += new System.Windows.Forms.DragEventHandler(this.panel6_DragEnter);
+            // 
+            // label12
+            // 
+            this.label12.Font = new System.Drawing.Font("Arial Narrow", 30F, System.Drawing.FontStyle.Underline, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label12.Location = new System.Drawing.Point(187, 7);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(291, 86);
+            this.label12.TabIndex = 1;
+            this.label12.Text = "WARZYWA";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel10
             // 
@@ -153,6 +314,7 @@
             this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox10.TabIndex = 0;
             this.pictureBox10.TabStop = false;
+            this.pictureBox10.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox10_MouseDown);
             // 
             // label10
             // 
@@ -189,6 +351,7 @@
             this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox9.TabIndex = 0;
             this.pictureBox9.TabStop = false;
+            this.pictureBox9.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox9_MouseDown);
             // 
             // label9
             // 
@@ -225,6 +388,7 @@
             this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox8.TabIndex = 0;
             this.pictureBox8.TabStop = false;
+            this.pictureBox8.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox8_MouseDown);
             // 
             // label8
             // 
@@ -261,6 +425,7 @@
             this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox7.TabIndex = 0;
             this.pictureBox7.TabStop = false;
+            this.pictureBox7.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox7_MouseDown);
             // 
             // label7
             // 
@@ -297,6 +462,7 @@
             this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox6.TabIndex = 0;
             this.pictureBox6.TabStop = false;
+            this.pictureBox6.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox6_MouseDown);
             // 
             // label6
             // 
@@ -333,6 +499,7 @@
             this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox5.TabIndex = 0;
             this.pictureBox5.TabStop = false;
+            this.pictureBox5.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox5_MouseDown);
             // 
             // label5
             // 
@@ -369,6 +536,7 @@
             this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox4.TabIndex = 0;
             this.pictureBox4.TabStop = false;
+            this.pictureBox4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox4_MouseDown);
             // 
             // label4
             // 
@@ -405,6 +573,7 @@
             this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox3.TabIndex = 0;
             this.pictureBox3.TabStop = false;
+            this.pictureBox3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox3_MouseDown);
             // 
             // label3
             // 
@@ -441,6 +610,7 @@
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox2.TabIndex = 0;
             this.pictureBox2.TabStop = false;
+            this.pictureBox2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox2_MouseDown);
             // 
             // label2
             // 
@@ -467,8 +637,6 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(200, 148);
             this.tableLayoutPanel1.TabIndex = 1;
-            //this.tableLayoutPanel1.DragDrop += new System.Windows.Forms.DragEventHandler(this.tableLayoutPanel1_DragDrop);
-            //this.tableLayoutPanel1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.tableLayoutPanel1_MouseDown);
             // 
             // pictureBox1
             // 
@@ -479,7 +647,7 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
-            //this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
+            this.pictureBox1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBox1_MouseDown);
             // 
             // label1
             // 
@@ -508,6 +676,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.tableLayoutPanel10.ResumeLayout(false);
@@ -568,5 +738,17 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.PictureBox pictureBox2;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel5;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Panel panel10;
+        private System.Windows.Forms.Panel panel9;
+        private System.Windows.Forms.Panel panel8;
+        private System.Windows.Forms.Panel panel7;
+        private System.Windows.Forms.Panel panel6;
+        private System.Windows.Forms.Label label12;
     }
 }
