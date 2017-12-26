@@ -20,9 +20,9 @@ namespace Play_with_English
         {
             InitializeComponent();
 
-            Dictionary<string, Image> dictOiW = new Dictionary<string, Image>();
+            Form1.reOpen = false;       // powrot do stanu pierwotnego - wymazanie statusu ponownego otwarcia okna
 
-            //string path = "E:\\GitHub\\JPWP - Projekt\\Play_with_English\\Play_with_English\\OwoceIWarzywa";    // sciezka do katalogu z obrazami
+            Dictionary<string, Image> dictOiW = new Dictionary<string, Image>();
 
             string path = @"OwoceIWarzywa";
             string fullPath = Path.GetFullPath(path);
@@ -94,6 +94,8 @@ namespace Play_with_English
             TableLayoutPanel tlp = (TableLayoutPanel)pb.Parent;
             tlp.Select();                           // przekierowanie obslugi na rodzica - TableLayoutPanel
 
+            
+
             if (wykorzystanyObrazek[tlp] == false)
             {
                 tlp.DoDragDrop(tlp, DragDropEffects.Move);  // ustawienie przemieszczania niewykorzystanego elementu dla realizacji Drag&Drop
@@ -104,10 +106,14 @@ namespace Play_with_English
             }
         }
 
-        // metoda wywolana podczas przeciagania elementu nad docelowym obszarem - jednakowa dla wszystkich
+        // Metoda wywolana podczas przeciagania elementu nad docelowym obszarem - jednakowa dla wszystkich
         private void panel1_DragEnter(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(typeof(TableLayoutPanel))) e.Effect = DragDropEffects.Move;   // ustawienie efektu dla przeciagania panelu w dozwolone miejsce
+            if (e.Data.GetDataPresent(typeof(TableLayoutPanel)))
+            {
+                e.Effect = DragDropEffects.Move;   // ustawienie efektu dla przeciagania panelu w dozwolone miejsce
+            }
+                
         }
 
         private void panel1_DragDrop(object sender, DragEventArgs e)    // metoda wywolana po upuszczeniu przeciaganego elementu
@@ -134,6 +140,7 @@ namespace Play_with_English
 
                 tlp.Parent.AllowDrop = false;
                 wykorzystanyObrazek[tlp] = true;    // zawarcie informacji o tym, ze obrazek zostal wykorzystany
+                EndLearningPart();                  // wyswietlenie dialogboxa (o ile wszystkie obrazki zostaly rozmieszczone)
             }
         }
 
@@ -161,7 +168,84 @@ namespace Play_with_English
 
                 tlp.Parent.AllowDrop = false;
                 wykorzystanyObrazek[tlp] = true;    // zawarcie informacji o tym, ze obrazek zostal wykorzystany
+                EndLearningPart();                  // wyswietlenie dialogboxa (o ile wszystkie obrazki zostaly rozmieszczone)
             }
+        }
+
+        // Metoda realizowana po rozmieszczeniu wszystkich obrazkow
+        private void EndLearningPart()
+        {
+            bool rozmieszczone = true;
+
+            foreach (KeyValuePair<TableLayoutPanel, bool> wykorzystany in wykorzystanyObrazek)
+            {
+                if (wykorzystany.Value == false)    // sprawdzanie, czy wszystkie obrazki sa rozmieszczone
+                {
+                    rozmieszczone = false;
+                }
+            }
+
+            if (rozmieszczone)      // tworzenie okna dialogowego w przypadku rozmieszczenia wszystkich obrazkow
+            {
+                Form informacja = new Form();
+                informacja.Size = new Size(600, 350);
+                informacja.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+                informacja.MaximizeBox = false;
+                informacja.MinimizeBox = false;
+                informacja.Text = "Play with English";
+                informacja.FormBorderStyle = FormBorderStyle.FixedDialog;
+                informacja.ControlBox = false;      // usuniecie przycisku zamykania okna
+
+                Label tekst = new Label();
+                tekst.Text = "Rozmieszczono poprawnie wszystkie obrazki! Chcesz przejść do testu czy powtórzyć etap nauki?";
+                tekst.Font = new Font("Arial", 20);
+                tekst.TextAlign = ContentAlignment.MiddleCenter;
+                tekst.Location = new Point(10, 25);
+                tekst.Size = new Size(550, 100);
+
+                Button test = new Button();
+                test.Text = "Przejdź do testu";
+                test.Location = new Point(115, 200);
+                test.Size = new Size(150, 75);
+                test.Click += new EventHandler(test_Click);
+
+                Button powtorz = new Button();
+                powtorz.Text = "Powtórz";
+                powtorz.Location = new Point(325, 200);
+                powtorz.Size = new Size(150, 75);
+                powtorz.Click += new EventHandler(powtorz_Click);
+
+                informacja.Controls.Add(tekst);
+                informacja.Controls.Add(test);
+                informacja.Controls.Add(powtorz);
+                informacja.ShowDialog();
+            }
+        }
+
+        // Metoda realizowana po wyborze przycisku przejscia do testu
+        private void test_Click (object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;    // pobranie informacji o przycisku
+            Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
+
+            var testForm = new Test();
+            inf.Hide();                     // ukrycie dialogboxa
+            this.Hide();                    // ukrycie formy etapu nauki
+            testForm.ShowDialog();
+            inf.Close();
+            this.Close();
+        }
+
+        // Metoda realizowana po wyborze przycisku powtorzenia etapu nauki
+        private void powtorz_Click (object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;    // pobranie informacji o przycisku
+            Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
+
+            Form1.reOpen = true;            // informacja o ponownym otwarciu child form
+
+            inf.Close();
+            this.Close();
         }
     }
 }
