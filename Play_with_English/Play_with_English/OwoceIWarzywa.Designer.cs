@@ -249,6 +249,7 @@
             this.Menu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.Menu.TabIndex = 7;
             this.Menu.TabStop = false;
+            this.Menu.Click += new System.EventHandler(this.Menu_Click);
             // 
             // panel10
             // 
