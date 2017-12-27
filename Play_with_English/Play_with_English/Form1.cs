@@ -38,5 +38,20 @@ namespace Play_with_English
             
             this.Show();                    // powrot do pracy na glownej formie
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var button2Form = new Sport();
+            this.Hide();                    // ukrycie glownej formy przed pokazaniem drugiej
+            button2Form.ShowDialog();       // wyswietlenie drugiej formy i przerwanie realizacji kodu dla pierwszej
+
+            while (reOpen == true)          // sprawdzenie, czy uruchomiono ponownie etap nauki
+            {
+                var reOpenForm = new Sport();   // utworzenie nowej formy dla powtorzenia etapu nauki
+                reOpenForm.ShowDialog();
+            }
+
+            this.Show();                    // powrot do pracy na glownej formie
+        }
     }
 }
