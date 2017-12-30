@@ -439,8 +439,8 @@ namespace Play_with_English
             pom.ControlBox = false;      // usuniecie przycisku zamykania okna
 
             Label tekst = new Label();
-            tekst.Text = "Celem wybranego etapu jest rozmieszczenie obrazków poprzez przeciąganie według zadanych kategorii "
-                + "(podział żywności na owoce i warzywa). W przypadku błędnego umieszczenia zostanie wyświetlony komunikat, "
+            tekst.Text = "Celem wybranego etapu jest rozmieszczenie obrazków poprzez przeciąganie tak, aby uzupełnić "
+                + "przykładowe drzewo genealogiczne. W przypadku błędnego umieszczenia zostanie wyświetlony komunikat, "
                 + "a obrazek wróci na swoje pierwotne miejsce. Po poprawnym rozmieszczeniu wszystkich obrazków użytkownik "
                 + "może przejść do testu sprawdzającego nabytą wiedzę lub powtórzyć etap nauki. Powodzenia!";
             tekst.Font = new Font("Arial", 14);
