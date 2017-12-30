@@ -86,6 +86,7 @@
             this.button5.TabIndex = 4;
             this.button5.Text = "Ubrania";
             this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button6
             // 
@@ -93,7 +94,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(204, 204);
             this.button6.TabIndex = 5;
-            this.button6.Text = "Nauka";
+            this.button6.Text = "Edukacja";
             this.button6.UseVisualStyleBackColor = true;
             // 
             // button7

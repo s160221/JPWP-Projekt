@@ -83,5 +83,20 @@ namespace Play_with_English
 
             this.Show();                    // powrot do pracy na glownej formie
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var button5Form = new Ubrania();
+            this.Hide();                    // ukrycie glownej formy przed pokazaniem drugiej
+            button5Form.ShowDialog();       // wyswietlenie drugiej formy i przerwanie realizacji kodu dla pierwszej
+
+            while (reOpen == true)          // sprawdzenie, czy uruchomiono ponownie etap nauki
+            {
+                var reOpenForm = new Ubrania();   // utworzenie nowej formy dla powtorzenia etapu nauki
+                reOpenForm.ShowDialog();
+            }
+
+            this.Show();                    // powrot do pracy na glownej formie
+        }
     }
 }

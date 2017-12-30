@@ -73,7 +73,7 @@ namespace Play_with_English
                 lab[i].Text = obraz.Key;    // uzycie klucza jako etykiety obrazu (angielskie slowo)
                 pb[i].Image = obraz.Value;  // uzycie obrazu w picturebox'ie
 
-                // okreslenie, czy dany obrazek to owoc czy warzywo
+                // okreslenie, czy dany obrazek to dzikie czy domowe zwierze
                 if (lab[i].Text == "Cat" || lab[i].Text == "Cow" || lab[i].Text == "Dog" || lab[i].Text == "Horse" || lab[i].Text == "Pig")
                 {
                     lab[i].Parent.Tag = "Domowe";
