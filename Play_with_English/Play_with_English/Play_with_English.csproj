@@ -89,6 +89,12 @@
     <Compile Include="Ubrania.Designer.cs">
       <DependentUpon>Ubrania.cs</DependentUpon>
     </Compile>
+    <Compile Include="Zawody.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Zawody.Designer.cs">
+      <DependentUpon>Zawody.cs</DependentUpon>
+    </Compile>
     <Compile Include="Zwierzeta.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -120,6 +126,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Ubrania.resx">
       <DependentUpon>Ubrania.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Zawody.resx">
+      <DependentUpon>Zawody.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Zwierzeta.resx">
       <DependentUpon>Zwierzeta.cs</DependentUpon>
@@ -205,6 +214,7 @@
     </Content>
     <None Include="Tlo\wardrobe.jpg" />
     <None Include="Tlo\education.jpg" />
+    <None Include="Tlo\work.png" />
     <Content Include="Ubrania\bag.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -233,6 +243,36 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Ubrania\t-shirt.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\baker.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\doctor.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\fireman.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\mechanic.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\policeman.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\postman.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\shopkeeper.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\soldier.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\taxi driver.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Zawody\teacher.jpg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Zwierzeta\cat.jpg">
