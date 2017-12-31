@@ -62,6 +62,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
+            this.Menu = new System.Windows.Forms.PictureBox();
             this.pictureBox10 = new System.Windows.Forms.PictureBox();
             this.pictureBox9 = new System.Windows.Forms.PictureBox();
             this.pictureBox8 = new System.Windows.Forms.PictureBox();
@@ -90,6 +91,7 @@
             this.tableLayoutPanel3.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Menu)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -153,6 +155,7 @@
             // 
             this.splitContainer2.Panel2.BackgroundImage = global::Play_with_English.Properties.Resources.basket1;
             this.splitContainer2.Panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.splitContainer2.Panel2.Controls.Add(this.Menu);
             this.splitContainer2.Panel2.Controls.Add(this.panel10);
             this.splitContainer2.Panel2.Controls.Add(this.panel9);
             this.splitContainer2.Panel2.Controls.Add(this.panel8);
@@ -168,7 +171,7 @@
             this.panel5.AllowDrop = true;
             this.panel5.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel5.Location = new System.Drawing.Point(198, 181);
+            this.panel5.Location = new System.Drawing.Point(193, 201);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(200, 148);
             this.panel5.TabIndex = 2;
@@ -180,7 +183,7 @@
             this.panel4.AllowDrop = true;
             this.panel4.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel4.Location = new System.Drawing.Point(381, 335);
+            this.panel4.Location = new System.Drawing.Point(381, 355);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(200, 148);
             this.panel4.TabIndex = 4;
@@ -192,7 +195,7 @@
             this.panel3.AllowDrop = true;
             this.panel3.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel3.Location = new System.Drawing.Point(18, 335);
+            this.panel3.Location = new System.Drawing.Point(10, 355);
             this.panel3.Name = "panel3";
             this.panel3.Size = new System.Drawing.Size(200, 148);
             this.panel3.TabIndex = 3;
@@ -204,7 +207,7 @@
             this.panel2.AllowDrop = true;
             this.panel2.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel2.Location = new System.Drawing.Point(381, 27);
+            this.panel2.Location = new System.Drawing.Point(381, 47);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(200, 148);
             this.panel2.TabIndex = 2;
@@ -216,7 +219,7 @@
             this.panel1.AllowDrop = true;
             this.panel1.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel1.Location = new System.Drawing.Point(10, 27);
+            this.panel1.Location = new System.Drawing.Point(10, 47);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(200, 148);
             this.panel1.TabIndex = 1;
@@ -225,8 +228,7 @@
             // 
             // label11
             // 
-            this.label11.BackColor = System.Drawing.Color.Peru;
-            this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.label11.BackColor = System.Drawing.Color.Transparent;
             this.label11.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label11.Location = new System.Drawing.Point(160, 517);
             this.label11.Name = "label11";
@@ -240,7 +242,7 @@
             this.panel10.AllowDrop = true;
             this.panel10.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel10.Location = new System.Drawing.Point(224, 181);
+            this.panel10.Location = new System.Drawing.Point(227, 201);
             this.panel10.Name = "panel10";
             this.panel10.Size = new System.Drawing.Size(200, 148);
             this.panel10.TabIndex = 6;
@@ -252,7 +254,7 @@
             this.panel9.AllowDrop = true;
             this.panel9.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel9.Location = new System.Drawing.Point(411, 335);
+            this.panel9.Location = new System.Drawing.Point(411, 355);
             this.panel9.Name = "panel9";
             this.panel9.Size = new System.Drawing.Size(200, 148);
             this.panel9.TabIndex = 5;
@@ -264,7 +266,7 @@
             this.panel8.AllowDrop = true;
             this.panel8.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel8.Location = new System.Drawing.Point(40, 335);
+            this.panel8.Location = new System.Drawing.Point(40, 355);
             this.panel8.Name = "panel8";
             this.panel8.Size = new System.Drawing.Size(200, 148);
             this.panel8.TabIndex = 4;
@@ -276,7 +278,7 @@
             this.panel7.AllowDrop = true;
             this.panel7.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel7.Location = new System.Drawing.Point(411, 27);
+            this.panel7.Location = new System.Drawing.Point(411, 47);
             this.panel7.Name = "panel7";
             this.panel7.Size = new System.Drawing.Size(200, 148);
             this.panel7.TabIndex = 3;
@@ -288,7 +290,7 @@
             this.panel6.AllowDrop = true;
             this.panel6.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.panel6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panel6.Location = new System.Drawing.Point(40, 27);
+            this.panel6.Location = new System.Drawing.Point(40, 47);
             this.panel6.Name = "panel6";
             this.panel6.Size = new System.Drawing.Size(200, 148);
             this.panel6.TabIndex = 2;
@@ -297,7 +299,7 @@
             // 
             // label12
             // 
-            this.label12.BackColor = System.Drawing.Color.Peru;
+            this.label12.BackColor = System.Drawing.Color.Transparent;
             this.label12.Font = new System.Drawing.Font("Arial", 26.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label12.Location = new System.Drawing.Point(184, 517);
             this.label12.Name = "label12";
@@ -566,6 +568,19 @@
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.label1.Visible = false;
             // 
+            // Menu
+            // 
+            this.Menu.ImageLocation = "E:\\GitHub\\JPWP-Projekt\\Play_with_English\\Play_with_English\\bin\\Debug\\Tlo\\menu1.pn" +
+    "g";
+            this.Menu.InitialImage = null;
+            this.Menu.Location = new System.Drawing.Point(518, 1);
+            this.Menu.Name = "Menu";
+            this.Menu.Size = new System.Drawing.Size(120, 40);
+            this.Menu.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.Menu.TabIndex = 7;
+            this.Menu.TabStop = false;
+            this.Menu.Click += new System.EventHandler(this.Menu_Click);
+            // 
             // pictureBox10
             // 
             this.pictureBox10.ImageLocation = "";
@@ -706,6 +721,7 @@
             this.tableLayoutPanel3.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Menu)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
@@ -766,5 +782,6 @@
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Panel panel6;
         private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.PictureBox Menu;
     }
 }
