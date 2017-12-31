@@ -103,6 +103,16 @@ namespace Play_with_English.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap house_interior {
+            get {
+                object obj = ResourceManager.GetObject("house interior", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap jungle {
             get {
                 object obj = ResourceManager.GetObject("jungle", resourceCulture);

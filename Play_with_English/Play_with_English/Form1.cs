@@ -128,5 +128,20 @@ namespace Play_with_English
 
             this.Show();                    // powrot do pracy na glownej formie
         }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var button8Form = new Dom();
+            this.Hide();                    // ukrycie glownej formy przed pokazaniem drugiej
+            button8Form.ShowDialog();       // wyswietlenie drugiej formy i przerwanie realizacji kodu dla pierwszej
+
+            while (reOpen == true)          // sprawdzenie, czy uruchomiono ponownie etap nauki
+            {
+                var reOpenForm = new Dom();   // utworzenie nowej formy dla powtorzenia etapu nauki
+                reOpenForm.ShowDialog();
+            }
+
+            this.Show();                    // powrot do pracy na glownej formie
+        }
     }
 }
