@@ -24,9 +24,6 @@ namespace Play_with_English
         // slownik informujacy, czy napisy zostaly rozmieszczone w docelowych miejscach
         protected Dictionary<Label, bool> wykorzystany = new Dictionary<Label, bool>();
 
-        // slownik informujacy, czy dana etykieta zostala poprawnie umieszczona w pytaniu 2.
-        protected Dictionary<Panel, bool> poprawny = new Dictionary<Panel, bool>();
-
         protected int liczbaKlikniec = 0;   // licznik klinkniec dla metody otwierania Menu
         FlowLayoutPanel flp = new FlowLayoutPanel();    // utworzenie panelu dla Menu
 
@@ -104,7 +101,7 @@ namespace Play_with_English
             }
             if (etap == 5)
             {
-                //EndTestPart();                  // zakonczenie etapu testu
+                EndTestPart();                  // zakonczenie etapu testu
             }
         }
 
@@ -113,27 +110,19 @@ namespace Play_with_English
         {
             wykorzystany.Clear();             // wyczyszczenie slownika wykorzystanych elementow
 
-            List<Control> doUsuniecia = new List<Control>();
+            List<Control> doUsuniecia = new List<Control>();    // utworzenie listy dla elementow przeznaczonych do usuniecia
 
             foreach (Control c in splitContainer1.Panel1.Controls)
             {
-                if (c.Name != "label1" && c.Name != "Menu")
+                if (c.Name != "labWynik" && c.Name != "Menu")
                 {
-                    /*PictureBox picture = c as PictureBox;
-                    if (picture != null)
-                    {
-                        picture.Image = null;
-                        splitContainer1.Panel1.Controls.Remove(picture);
-                    } */
-                    doUsuniecia.Add(c);
-                    //splitContainer1.Panel1.Controls.Remove(c);      // usuwanie kazdego elementu, ktory nie jest elementem statycznym
-                    //c.Dispose();
+                    doUsuniecia.Add(c);     // dodanie do listy wszystkich elementow utworzonych dynamicznie
                 }
             }
 
             foreach (Control c in doUsuniecia)
             {
-                splitContainer1.Panel1.Controls.Remove(c);
+                splitContainer1.Panel1.Controls.Remove(c);      // usuniecie elementow utworzonych dynamicznie
                 c.Dispose();
             }
         }
@@ -142,10 +131,10 @@ namespace Play_with_English
         private void Pytanie1()
         {
             Random rand = new Random();
-            Image[] image = new Image[4];
-            Image[] oPrztasowane = new Image[4];
-            string[] odpowiedzi = new string[4];
-            string[] pPrzetasowane = new string[4];
+            Image[] image = new Image[4];               // tablica do przechowania obrazow
+            Image[] oPrztasowane = new Image[4];        // tablica na przetasowane obrazy
+            string[] odpowiedzi = new string[4];        // tablica na podpisy obrazkow
+            string[] pPrzetasowane = new string[4];     // tablica na przetasowane podpisy
 
             if (etap == 1)
             {
@@ -172,7 +161,7 @@ namespace Play_with_English
                 pan[i] = new Panel();
                 pan[i].Size = new Size(250, 50);
                 pan[i].BorderStyle = BorderStyle.Fixed3D;
-                pan[i].Name = "Panel" + (i+1);
+                pan[i].Name = "Panel" + (i+2);
                 pan[i].AllowDrop = true;    // obszar docelowy przeciagania
                 pan[i].DragEnter += new DragEventHandler(pan_DragEnter);
                 pan[i].DragDrop += new DragEventHandler(pan1_DragDrop);
@@ -207,7 +196,7 @@ namespace Play_with_English
                 lab[i].Font = new Font("Arial", 20);
                 lab[i].TextAlign = ContentAlignment.MiddleCenter;
                 lab[i].BorderStyle = BorderStyle.FixedSingle;
-                lab[i].Name = "Label" + (i+2);
+                lab[i].Name = "Label" + (i+1);
                 lab[i].Text = pPrzetasowane[i];
                 lab[i].Location = new Point(50 + 300 * i, 55);
                 lab[i].MouseDown += new MouseEventHandler(lab1_MouseDown);   // uruchomienie przeciagania po wcisnieciu myszki
@@ -254,7 +243,7 @@ namespace Play_with_English
                 pan[i] = new Panel();
                 pan[i].Size = new Size(60, 60);
                 pan[i].BorderStyle = BorderStyle.Fixed3D;
-                pan[i].Name = "Panel" + (i+1);
+                pan[i].Name = "Panel" + (i+2);
                 pan[i].Tag = odpowiedz[i].ToString();  // przypisanie odpowiedniej litery do danego panelu
                 pan[i].AllowDrop = true;    // obszar docelowy przeciagania
                 pan[i].DragEnter += new DragEventHandler(pan_DragEnter);
@@ -265,7 +254,7 @@ namespace Play_with_English
                 lab[i].Font = new Font("Arial", 20);
                 lab[i].TextAlign = ContentAlignment.MiddleCenter;
                 lab[i].BorderStyle = BorderStyle.FixedSingle;
-                lab[i].Name = "Label" + (i + 2);
+                lab[i].Name = "Label" + (i + 1);
                 lab[i].Text = przetasowane[i].ToString();   // przypisanie losowej litery z podpisu obrazka do etykiety
                 lab[i].Location = new Point(50 + 300 * i, 50);
                 lab[i].MouseDown += new MouseEventHandler(lab2_MouseDown);   // uruchomienie przeciagania po wcisnieciu myszki
@@ -343,7 +332,7 @@ namespace Play_with_English
                 if (wynik > 0)
                 {
                     wynik--;    // odjecie punktu w przypadku, gdy wynik jest wyzszy od zera
-                    label1.Text = "WYNIK: " + wynik;
+                    labWynik.Text = "WYNIK: " + wynik;
                 }
             }
             else
@@ -354,7 +343,7 @@ namespace Play_with_English
                 MessageBox.Show("Brawo! Poprawna odpowiedź!");
 
                 wynik++;
-                label1.Text = "WYNIK: " + wynik;
+                labWynik.Text = "WYNIK: " + wynik;
                 pan.AllowDrop = false;
                 wykorzystany[lab] = true;         // zawarcie informacji o tym, ze etykieta zostala wykorzystana
 
@@ -392,9 +381,9 @@ namespace Play_with_English
             {
                 if (c.HasChildren)
                 {
-                    c.AllowDrop = false;
-                    Label l = (Label)c.GetChildAtPoint(new Point(0,0));
-                    utworzonaNazwa += l.Text;
+                    c.AllowDrop = false;    // zablokowanie przeciagania
+                    Label l = (Label)c.GetChildAtPoint(new Point(0,0));     // pobranie informacji o etykiecie znajdujacej sie w panelu
+                    utworzonaNazwa += l.Text;       // tworzenie slowa z kolejno rozmieszczonych liter
                 }
                 else
                 {
@@ -404,45 +393,7 @@ namespace Play_with_English
 
             wykorzystany[lab] = true;   // oznaczenie, ze dana litera zostala wykorzystana
 
-            /*  bool wartosc;   // zmienna zwracana w przypadku, gdy dany panel zostal juz wprowadzony do slownika
-
-              if (lab.Text != (string)pan.Tag)
-              {
-                  if (poprawny.TryGetValue(pan, out wartosc))
-                  {
-                      poprawny[pan] = false;      // nadpisanie wartosci w przypadku, gdy dany klucz istnieje
-                  }
-                  else
-                  {
-                      poprawny.Add(pan, false);   // dodanie pary klucz - wartosc w przypadku, gdy nie byla jeszcze wpisana
-                  }
-              }
-              else
-              {
-                  if (poprawny.TryGetValue(pan, out wartosc))
-                  {
-                      poprawny[pan] = true;      // nadpisanie wartosci w przypadku, gdy dany klucz istnieje
-                  }
-                  else
-                  {
-                      poprawny.Add(pan, true);   // dodanie pary klucz - wartosc w przypadku, gdy nie byla jeszcze wpisana
-                  }
-
-              } */
-
-            //ushort rozmieszczone = 0;   // licznik rozmieszczonych etykiet
-            //bool wszystkiePoprawne = true;  // sprawdzenie, czy wszystkie etykiety zostaly rozmieszczone poprawnie
-            bool rozmieszczone = true;      // sprawdzenie, czy wszystkie etykiety zostaly rozmieszczone
-
-            /*foreach (KeyValuePair<Panel, bool> pop in poprawny)
-            {
-                if (!pop.Value)
-                {
-                    wszystkiePoprawne = false;
-                }
-
-                rozmieszczone++;
-            } */
+            bool rozmieszczone = true;      // flaga rozmieszczenia wszystkich liter
 
             foreach (KeyValuePair<Label, bool> rozm in wykorzystany)
             {
@@ -461,9 +412,8 @@ namespace Play_with_English
                     MessageBox.Show("Brawo! Poprawna odpowiedź!");
 
                     wynik++;    // dodanie punktu
-                    label1.Text = "WYNIK: " + wynik;
+                    labWynik.Text = "WYNIK: " + wynik;
 
-                    poprawny.Clear();
                     etap++;
                     Etap();     // przejscie do kolejnego etapu
                 }
@@ -474,41 +424,78 @@ namespace Play_with_English
                     if (wynik > 0)
                     {
                         wynik--;    // odjecie punktu w przypadku, gdy wynik jest wyzszy od zera
-                        label1.Text = "WYNIK: " + wynik;
+                        labWynik.Text = "WYNIK: " + wynik;
                     }
 
-                    poprawny.Clear();
                     Etap();     // powtorzenie etapu
                 }
 
-                /* // sprawdzenie, czy wszystkie etykiety zostaly rozmieszczone
-                 if ((etap == 2 && rozmieszczone == podpis[4].Length) || (etap == 4 && rozmieszczone == podpis[9].Length))
-                 {
-                     if (!wszystkiePoprawne)     // jezeli etykiety tworza zla sekwencje
-                     {
-                         MessageBox.Show("Błędna odpowiedź!");
-
-                         if (wynik > 0)
-                         {
-                             wynik--;    // odjecie punktu w przypadku, gdy wynik jest wyzszy od zera
-                             label1.Text = "WYNIK: " + wynik;
-                         }
-
-                         poprawny.Clear();
-                         Etap();     // powtorzenie etapu
-                     }
-                     else            // jezeli etykiety tworza dobra sekwencje
-                     {
-                         MessageBox.Show("Brawo! Poprawna odpowiedź!");
-
-                         wynik++;    // dodanie punktu
-                         label1.Text = "WYNIK: " + wynik;
-
-                         poprawny.Clear();
-                         etap++;
-                         Etap();     // przejscie do kolejnego etapu
-                     } */
             }
+        }
+
+        // Metoda realizowana po odpowiedzi na wszystkie pytania
+        private void EndTestPart()
+        {
+            // DODAC ZAPISYWANIE WYNIKOW DO PLIKU!!!
+            
+            // utworzenie okna
+            Form informacja = new Form();
+            informacja.Size = new Size(600, 350);
+            informacja.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
+            informacja.MaximizeBox = false;
+            informacja.MinimizeBox = false;
+            informacja.Text = "Play with English";
+            informacja.FormBorderStyle = FormBorderStyle.FixedDialog;
+            informacja.ControlBox = false;      // usuniecie przycisku zamykania okna
+
+            Label tekst = new Label();
+            tekst.Text = "Ukończono test! Twój wynik to: " + wynik + " punktów. Swoje wyniki zawsze możesz sprawdzić wybierając "
+                + "odpowiednią opcję z Menu. Możesz teraz przejść do ekranu głównego lub powtórzyć test.";
+            tekst.Font = new Font("Arial", 16);
+            tekst.TextAlign = ContentAlignment.MiddleCenter;
+            tekst.Location = new Point(10, 25);
+            tekst.Size = new Size(550, 100);
+
+            Button koniec = new Button();
+            koniec.Text = "Przejdź do ekranu głównego";
+            koniec.Location = new Point(115, 200);
+            koniec.Size = new Size(150, 75);
+            koniec.Click += new EventHandler(koniec_Click);
+
+            Button powtorz = new Button();
+            powtorz.Text = "Powtórz test";
+            powtorz.Location = new Point(325, 200);
+            powtorz.Size = new Size(150, 75);
+            powtorz.Click += new EventHandler(powtorz_Click);
+
+            informacja.Controls.Add(tekst);
+            informacja.Controls.Add(koniec);
+            informacja.Controls.Add(powtorz);
+            informacja.ShowDialog();
+        }
+
+        // Metoda realizowana po wyborze przycisku powrotu do ekranu glownego
+        private void koniec_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;    // pobranie informacji o przycisku
+            Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
+
+            inf.Close();
+            this.Close();
+        }
+
+        // Metoda realizowana po wyborze przycisku powtorzenia etapu nauki
+        private void powtorz_Click(object sender, EventArgs e)
+        {
+            Button btn = (Button)sender;    // pobranie informacji o przycisku
+            Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
+
+            var testForm = new Test();
+            inf.Hide();                     // ukrycie dialogboxa
+            this.Hide();                    // ukrycie formy etapu testu
+            testForm.ShowDialog();
+            inf.Close();
+            this.Close();
         }
 
         // Metoda odpowiedzialna za utworzenie menu i wprowadzenie przyciskow funkcyjnych
