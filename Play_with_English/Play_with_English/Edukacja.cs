@@ -13,7 +13,7 @@ namespace Play_with_English
 {
     public partial class Edukacja : Form
     {
-        // slownik ifnromujacy, czy obrazy zostaly rozmieszczone w docelowych miejscach
+        // slownik informujacy, czy obrazy zostaly rozmieszczone w docelowych miejscach
         protected Dictionary<TableLayoutPanel, bool> wykorzystanyObrazek = new Dictionary<TableLayoutPanel, bool>();
 
         protected int liczbaKlikniec = 0;   // licznik klinkniec dla metody otwierania Menu
@@ -534,6 +534,8 @@ namespace Play_with_English
         {
             Button btn = (Button)sender;    // pobranie informacji o przycisku
             Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
+
+            Test.kategoria = @"Edukacja";   // zawarcie informacji o kategorii, z ktorej bedzie przeprowadzony test
 
             var testForm = new Test();
             inf.Hide();                     // ukrycie dialogboxa

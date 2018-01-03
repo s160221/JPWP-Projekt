@@ -12,7 +12,7 @@ namespace Play_with_English
 {
     public partial class Form1 : Form
     {
-        private static bool ReOpen;
+        private static bool ReOpen;     // zmienna przechowujaca informacje o ponownym uruchomieniu etapu nauki
         public static bool reOpen
         {
             get { return ReOpen; }
