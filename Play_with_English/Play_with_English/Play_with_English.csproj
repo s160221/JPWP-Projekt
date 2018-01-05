@@ -63,6 +63,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Kategorie.cs" />
     <Compile Include="OwoceIWarzywa.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +101,8 @@
     <Compile Include="Ubrania.Designer.cs">
       <DependentUpon>Ubrania.cs</DependentUpon>
     </Compile>
+    <Compile Include="Wynik.cs" />
+    <Compile Include="Wyniki.cs" />
     <Compile Include="Zawody.cs">
       <SubType>Form</SubType>
     </Compile>

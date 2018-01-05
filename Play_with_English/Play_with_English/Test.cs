@@ -196,6 +196,7 @@ namespace Play_with_English
                 lab[i].Font = new Font("Arial", 20);
                 lab[i].TextAlign = ContentAlignment.MiddleCenter;
                 lab[i].BorderStyle = BorderStyle.FixedSingle;
+                lab[i].BackColor = System.Drawing.Color.White;
                 lab[i].Name = "Label" + (i+1);
                 lab[i].Text = pPrzetasowane[i];
                 lab[i].Location = new Point(50 + 300 * i, 55);
@@ -254,6 +255,7 @@ namespace Play_with_English
                 lab[i].Font = new Font("Arial", 20);
                 lab[i].TextAlign = ContentAlignment.MiddleCenter;
                 lab[i].BorderStyle = BorderStyle.FixedSingle;
+                lab[i].BackColor = System.Drawing.Color.White;
                 lab[i].Name = "Label" + (i + 1);
                 lab[i].Text = przetasowane[i].ToString();   // przypisanie losowej litery z podpisu obrazka do etykiety
                 lab[i].Location = new Point(50 + 300 * i, 50);
@@ -437,7 +439,29 @@ namespace Play_with_English
         private void EndTestPart()
         {
             // DODAC ZAPISYWANIE WYNIKOW DO PLIKU!!!
-            
+
+            /*FormCollection fc = Application.OpenForms;  // utworzenie kolekcji form
+            Control f = null;   // utworzenie obiektu na przechowanie formy
+
+            for (int i = 0; i < fc.Count; i++)
+            {
+                if (fc[i].Name == "Form1")      // pobieranie danych Form1
+                {
+                    f = fc[i];
+                    break;
+                }
+            }
+
+            foreach (Control c in f.Controls)
+            {
+                if (kategoria == (string)c.Tag)
+                {
+                    c.Visible = true;
+                }
+            } */
+
+
+
             // utworzenie okna
             Form informacja = new Form();
             informacja.Size = new Size(600, 350);
@@ -449,8 +473,10 @@ namespace Play_with_English
             informacja.ControlBox = false;      // usuniecie przycisku zamykania okna
 
             Label tekst = new Label();
-            tekst.Text = "Ukończono test! Twój wynik to: " + wynik + " punktów. Swoje wyniki zawsze możesz sprawdzić wybierając "
-                + "odpowiednią opcję z Menu. Możesz teraz przejść do ekranu głównego lub powtórzyć test.";
+            tekst.Text = "Ukończono test! Twój wynik to: " + wynik + " punktów (" + (wynik*10) + "%). "
+                + "Swoje wyniki zawsze możesz sprawdzić wybierając odpowiednią opcję z Menu. Możesz teraz "
+                + "przejść do ekranu głównego lub powtórzyć test. Test możesz uruchomić również z poziomu "
+                + "ekranu głównego.";
             tekst.Font = new Font("Arial", 16);
             tekst.TextAlign = ContentAlignment.MiddleCenter;
             tekst.Location = new Point(10, 25);

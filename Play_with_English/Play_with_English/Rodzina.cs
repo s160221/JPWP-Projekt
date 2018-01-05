@@ -350,7 +350,7 @@ namespace Play_with_English
             Button btn = (Button)sender;    // pobranie informacji o przycisku
             Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
 
-            Test.kategoria = @"Rodzina";   // zawarcie informacji o kategorii, z ktorej bedzie przeprowadzony test
+            Test.kategoria = "Rodzina";   // zawarcie informacji o kategorii, z ktorej bedzie przeprowadzony test
 
             var testForm = new Test();
             inf.Hide();                     // ukrycie dialogboxa
