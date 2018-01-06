@@ -25,7 +25,7 @@ namespace Play_with_English
 
             Form1.reOpen = false;       // powrot do stanu pierwotnego - wymazanie statusu ponownego otwarcia okna
 
-            Dictionary<string, Image> dictOiW = new Dictionary<string, Image>();
+            Dictionary<string, string> dictOiW = new Dictionary<string, string>();
 
             string path = @"Edukacja";
             string fullPath = Path.GetFullPath(path);
@@ -47,11 +47,11 @@ namespace Play_with_English
 
             foreach (var nazwa in zdjecia)
             {
-                Bitmap bmp = null;
+                //Bitmap bmp = null;
 
                 try
                 {
-                    bmp = new Bitmap(nazwa);    // utworzenie bitmapy na podstawie sciezki
+                    //bmp = new Bitmap(nazwa);    // utworzenie bitmapy na podstawie sciezki
                     klucz = nazwa.Split('.')[0];
                     klucz = klucz.Split('\\').Last();   // zebranie nazwy pliku jako klucza
                     klucz = char.ToUpper(klucz[0]) + klucz.Substring(1);    // zamiana pierwszej litery na wielka
@@ -62,16 +62,16 @@ namespace Play_with_English
                     continue;
                 }
 
-                dictOiW.Add(klucz, bmp);
+                dictOiW.Add(klucz, nazwa);
             }
 
             Random losuj = new Random();
             dictOiW = dictOiW.OrderBy(x => losuj.Next()).ToDictionary(elem => elem.Key, elem => elem.Value);    // przetasowanie elementow w slowniku
 
-            foreach (KeyValuePair<string, Image> obraz in dictOiW)
+            foreach (KeyValuePair<string, string> obraz in dictOiW)
             {
                 lab[i].Text = obraz.Key;    // uzycie klucza jako etykiety obrazu (angielskie slowo)
-                pb[i].Image = obraz.Value;  // uzycie obrazu w picturebox'ie
+                pb[i].ImageLocation = obraz.Value;  // uzycie obrazu w picturebox'ie
 
                 wykorzystanyObrazek.Add((TableLayoutPanel)pb[i].Parent, false);     // dodanie informacji o tym, ze zaden obrazek nie zostal jeszcze rozmieszczony
 
@@ -542,7 +542,9 @@ namespace Play_with_English
             this.Hide();                    // ukrycie formy etapu nauki
             testForm.ShowDialog();
             inf.Close();
+            inf.Dispose();
             this.Close();
+            this.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku powtorzenia etapu nauki
@@ -554,7 +556,9 @@ namespace Play_with_English
             Form1.reOpen = true;            // informacja o ponownym otwarciu child form
 
             inf.Close();
+            inf.Dispose();
             this.Close();
+            this.Dispose();
         }
 
         // Metoda odpowiedzialna za utworzenie menu i wprowadzenie przyciskow funkcyjnych
@@ -653,12 +657,14 @@ namespace Play_with_English
             Form par = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku (oknie pomocy)
 
             par.Close();    // zamkniecie okna pomocy
+            par.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku powrotu
         private void powrot_Click(object sender, EventArgs e)
         {
             this.Close();   // zamkniecie okna etapu nauki
+            this.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku wyjscie

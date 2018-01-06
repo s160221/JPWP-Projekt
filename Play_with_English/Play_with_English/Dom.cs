@@ -25,7 +25,7 @@ namespace Play_with_English
 
             Form1.reOpen = false;       // powrot do stanu pierwotnego - wymazanie statusu ponownego otwarcia okna
 
-            Dictionary<string, Image> dictOiW = new Dictionary<string, Image>();
+            Dictionary<string, string> dictOiW = new Dictionary<string, string>();
 
             string path = @"Dom";
             string fullPath = Path.GetFullPath(path);
@@ -47,11 +47,11 @@ namespace Play_with_English
 
             foreach (var nazwa in zdjecia)
             {
-                Bitmap bmp = null;
+                //Bitmap bmp = null;
 
                 try
                 {
-                    bmp = new Bitmap(nazwa);    // utworzenie bitmapy na podstawie sciezki
+                    //bmp = new Bitmap(nazwa);    // utworzenie bitmapy na podstawie sciezki
                     klucz = nazwa.Split('.')[0];
                     klucz = klucz.Split('\\').Last();   // zebranie nazwy pliku jako klucza
                     klucz = char.ToUpper(klucz[0]) + klucz.Substring(1);    // zamiana pierwszej litery na wielka
@@ -62,16 +62,16 @@ namespace Play_with_English
                     continue;
                 }
 
-                dictOiW.Add(klucz, bmp);
+                dictOiW.Add(klucz, nazwa);
             }
 
             Random losuj = new Random();
             dictOiW = dictOiW.OrderBy(x => losuj.Next()).ToDictionary(elem => elem.Key, elem => elem.Value);    // przetasowanie elementow w slowniku
 
-            foreach (KeyValuePair<string, Image> obraz in dictOiW)
+            foreach (KeyValuePair<string, string> obraz in dictOiW)
             {
                 lab[i].Text = obraz.Key;    // uzycie klucza jako etykiety obrazu (angielskie slowo)
-                pb[i].Image = obraz.Value;  // uzycie obrazu w picturebox'ie
+                pb[i].ImageLocation = obraz.Value;  // uzycie obrazu w picturebox'ie
 
                 wykorzystanyObrazek.Add((TableLayoutPanel)pb[i].Parent, false);     // dodanie informacji o tym, ze zaden obrazek nie zostal jeszcze rozmieszczony
 
@@ -494,32 +494,40 @@ namespace Play_with_English
 
             if (rozmieszczone)      // tworzenie okna dialogowego w przypadku rozmieszczenia wszystkich obrazkow
             {
-                Form informacja = new Form();
-                informacja.Size = new Size(600, 350);
-                informacja.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-                informacja.MaximizeBox = false;
-                informacja.MinimizeBox = false;
-                informacja.Text = "Play with English";
-                informacja.FormBorderStyle = FormBorderStyle.FixedDialog;
-                informacja.ControlBox = false;      // usuniecie przycisku zamykania okna
+                Form informacja = new Form
+                {
+                    Size = new Size(600, 350),
+                    StartPosition = System.Windows.Forms.FormStartPosition.CenterParent,
+                    MaximizeBox = false,
+                    MinimizeBox = false,
+                    Text = "Play with English",
+                    FormBorderStyle = FormBorderStyle.FixedDialog,
+                    ControlBox = false      // usuniecie przycisku zamykania okna
+                };
 
-                Label tekst = new Label();
-                tekst.Text = "Rozmieszczono poprawnie wszystkie obrazki! Chcesz przejść do testu czy powtórzyć etap nauki?";
-                tekst.Font = new Font("Arial", 20);
-                tekst.TextAlign = ContentAlignment.MiddleCenter;
-                tekst.Location = new Point(10, 25);
-                tekst.Size = new Size(550, 100);
+                Label tekst = new Label
+                {
+                    Text = "Rozmieszczono poprawnie wszystkie obrazki! Chcesz przejść do testu czy powtórzyć etap nauki?",
+                    Font = new Font("Arial", 20),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Location = new Point(10, 25),
+                    Size = new Size(550, 100)
+                };
 
-                Button test = new Button();
-                test.Text = "Przejdź do testu";
-                test.Location = new Point(115, 200);
-                test.Size = new Size(150, 75);
+                Button test = new Button
+                {
+                    Text = "Przejdź do testu",
+                    Location = new Point(115, 200),
+                    Size = new Size(150, 75)
+                };
                 test.Click += new EventHandler(test_Click);
 
-                Button powtorz = new Button();
-                powtorz.Text = "Powtórz";
-                powtorz.Location = new Point(325, 200);
-                powtorz.Size = new Size(150, 75);
+                Button powtorz = new Button
+                {
+                    Text = "Powtórz",
+                    Location = new Point(325, 200),
+                    Size = new Size(150, 75)
+                };
                 powtorz.Click += new EventHandler(powtorz_Click);
 
                 informacja.Controls.Add(tekst);
@@ -543,6 +551,9 @@ namespace Play_with_English
             testForm.ShowDialog();
             inf.Close();
             this.Close();
+            inf.Dispose();
+            this.Dispose();
+            
         }
 
         // Metoda realizowana po wyborze przycisku powtorzenia etapu nauki
@@ -554,7 +565,10 @@ namespace Play_with_English
             Form1.reOpen = true;            // informacja o ponownym otwarciu child form
 
             inf.Close();
+            inf.Dispose();
+            
             this.Close();
+            this.Dispose();
         }
 
         // Metoda odpowiedzialna za utworzenie menu i wprowadzenie przyciskow funkcyjnych
@@ -653,12 +667,14 @@ namespace Play_with_English
             Form par = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku (oknie pomocy)
 
             par.Close();    // zamkniecie okna pomocy
+            par.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku powrotu
         private void powrot_Click(object sender, EventArgs e)
         {
             this.Close();   // zamkniecie okna etapu nauki
+            this.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku wyjscie

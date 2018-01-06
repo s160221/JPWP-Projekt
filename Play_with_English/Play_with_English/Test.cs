@@ -15,12 +15,7 @@ namespace Play_with_English
 {
     public partial class Test : Form
     {
-        private static string Kategoria;
-        public static string kategoria
-        {
-            get { return Kategoria; }
-            set { Kategoria = value; }
-        }
+        public static string kategoria { get; set; }
 
         // slownik informujacy, czy napisy zostaly rozmieszczone w docelowych miejscach
         protected Dictionary<Label, bool> wykorzystany = new Dictionary<Label, bool>();
@@ -33,8 +28,8 @@ namespace Play_with_English
         
 
 
-        Dictionary<Image, string> dict = new Dictionary<Image, string>();   // slownik do przechowywania obrazow i ich podpisow
-        Image[] img = new Image[10];              // tablica do przechowywania 10 wylosowanych obrazow
+        Dictionary<string, string> dict = new Dictionary<string, string>();   // slownik do przechowywania obrazow i ich podpisow
+        string[] img = new string[10];              // tablica do przechowywania 10 wylosowanych obrazow
         string[] podpis = new string[10];         // tablica do przechowywania 10 nazw odpowiadajacych wylosowanym obrazom
 
         public Test()
@@ -60,11 +55,11 @@ namespace Play_with_English
 
                 foreach (var naz in listaZdjec)
                 {
-                    Bitmap bmp = null;
+                    //Bitmap bmp = null;
 
                     try
                     {
-                        bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
+                        //bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
                         nazwa = naz.Split('.')[0];
                         nazwa = nazwa.Split('\\').Last();   // zebranie nazwy pliku jako klucza
                         nazwa = nazwa.Split('_')[0];
@@ -76,7 +71,7 @@ namespace Play_with_English
                         continue;
                     }
 
-                    dict.Add(bmp, nazwa);
+                    dict.Add(naz, nazwa);
                 }
             }
             else                             // jezeli wybrano inny test
@@ -88,11 +83,11 @@ namespace Play_with_English
 
                 foreach (var naz in zdjecia)
                 {
-                    Bitmap bmp = null;
+                    //Bitmap bmp = null;
 
                     try
                     {
-                        bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
+                        //bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
                         nazwa = naz.Split('.')[0];
                         nazwa = nazwa.Split('\\').Last();   // zebranie nazwy pliku jako klucza
                         nazwa = nazwa.Split('_')[0];
@@ -104,7 +99,7 @@ namespace Play_with_English
                         continue;
                     }
 
-                    dict.Add(bmp, nazwa);
+                    dict.Add(naz, nazwa);
                 }
             }
             
@@ -114,7 +109,7 @@ namespace Play_with_English
 
             int i = 0;      // licznik dla petli par w slowniku
 
-            foreach (KeyValuePair<Image, string> obraz in dict)
+            foreach (KeyValuePair<string, string> obraz in dict)
             {
                 img[i] = obraz.Key;
                 podpis[i] = obraz.Value;
@@ -169,10 +164,10 @@ namespace Play_with_English
         private void Pytanie1()
         {
             Random rand = new Random();
-            Image[] image = new Image[4];               // tablica do przechowania obrazow
-            Image[] oPrztasowane = new Image[4];        // tablica na przetasowane obrazy
+            string[] image = new string[4];               // tablica do przechowania obrazow
+            //string[] oPrztasowane = new string[4];        // tablica na przetasowane obrazy
             string[] odpowiedzi = new string[4];        // tablica na podpisy obrazkow
-            string[] pPrzetasowane = new string[4];     // tablica na przetasowane podpisy
+            //string[] pPrzetasowane = new string[4];     // tablica na przetasowane podpisy
 
             if (etap == 1)
             {
@@ -185,8 +180,8 @@ namespace Play_with_English
                 odpowiedzi = podpis.Skip(5).Take(4).ToArray();    // wybranie od 6 do 9 etykiety
             }
 
-            oPrztasowane = image.OrderBy(r => rand.Next()).ToArray();           // przemieszanie wybranych obrazow
-            pPrzetasowane = odpowiedzi.OrderBy(r => rand.Next()).ToArray();     // przemieszanie wybranych etykiet
+            image = image.OrderBy(r => rand.Next()).ToArray();           // przemieszanie wybranych obrazow
+            odpowiedzi = odpowiedzi.OrderBy(r => rand.Next()).ToArray();     // przemieszanie wybranych etykiet
 
             Panel[] pan = new Panel[4];
             PictureBox[] pb = new PictureBox[4];
@@ -196,19 +191,23 @@ namespace Play_with_English
 
             for (int i = 0; i < 4; i++)
             {
-                pan[i] = new Panel();
-                pan[i].Size = new Size(250, 50);
-                pan[i].BorderStyle = BorderStyle.Fixed3D;
-                pan[i].Name = "Panel" + (i+2);
-                pan[i].AllowDrop = true;    // obszar docelowy przeciagania
+                pan[i] = new Panel
+                {
+                    Size = new Size(250, 50),
+                    BorderStyle = BorderStyle.Fixed3D,
+                    Name = "Panel" + (i + 2),
+                    AllowDrop = true    // obszar docelowy przeciagania
+                };
                 pan[i].DragEnter += new DragEventHandler(pan_DragEnter);
                 pan[i].DragDrop += new DragEventHandler(pan1_DragDrop);
-                
-                pb[i] = new PictureBox();
-                pb[i].Name = "PictureBox" + (i+1);
-                pb[i].Size = new Size(250, 250);
-                pb[i].SizeMode = PictureBoxSizeMode.StretchImage;
-                pb[i].Image = oPrztasowane[i];
+
+                pb[i] = new PictureBox
+                {
+                    Name = "PictureBox" + (i + 1),
+                    Size = new Size(250, 250),
+                    SizeMode = PictureBoxSizeMode.StretchImage,
+                    ImageLocation = image[i]
+                };
 
                 if (i % 2 == 0)           // rozmieszczenie parzystych paneli
                 {
@@ -227,17 +226,19 @@ namespace Play_with_English
                 splitContainer1.Panel1.Controls.Add(pan[i]);
                 splitContainer1.Panel1.Controls.Add(pb[i]);
 
-                pan[i].Tag = dict[pb[i].Image];     // powiazanie panelu z odpowiadajacym mu zdjeciem
+                pan[i].Tag = dict[pb[i].ImageLocation];     // powiazanie panelu z odpowiadajacym mu zdjeciem
 
-                lab[i] = new Label();
-                lab[i].Size = new Size(250, 50);
-                lab[i].Font = new Font("Arial", 20);
-                lab[i].TextAlign = ContentAlignment.MiddleCenter;
-                lab[i].BorderStyle = BorderStyle.FixedSingle;
-                lab[i].BackColor = System.Drawing.Color.White;
-                lab[i].Name = "Label" + (i+1);
-                lab[i].Text = pPrzetasowane[i];
-                lab[i].Location = new Point(50 + 300 * i, 55);
+                lab[i] = new Label
+                {
+                    Size = new Size(250, 50),
+                    Font = new Font("Arial", 20),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    BackColor = System.Drawing.Color.White,
+                    Name = "Label" + (i + 1),
+                    Text = odpowiedzi[i],
+                    Location = new Point(50 + 300 * i, 55)
+                };
                 lab[i].MouseDown += new MouseEventHandler(lab1_MouseDown);   // uruchomienie przeciagania po wcisnieciu myszki
                 splitContainer1.Panel2.Controls.Add(lab[i]);
 
@@ -249,7 +250,7 @@ namespace Play_with_English
         private void Pytanie2()
         {
             Random rand = new Random();
-            Image image = null;     // obiekt do przechowania obrazu z tablicy
+            string image = null;     // obiekt do przechowania obrazu z tablicy
             string nazwa;          // obiekt do przechowania nazwy obrazu
 
             if (etap == 2)
@@ -266,12 +267,14 @@ namespace Play_with_English
             char[] odpowiedz = nazwa.ToArray();     // tablica znakow podpisu obrazka
             char[] przetasowane = odpowiedz.OrderBy(r => rand.Next()).ToArray();    // tablica na przetasowane znaki podpsiu obrazka
 
-            PictureBox pb = new PictureBox();
-            pb.Name = "PictureBox1";
-            pb.Size = new Size(460, 460);
-            pb.Location = new Point(402, 150);
-            pb.SizeMode = PictureBoxSizeMode.StretchImage;
-            pb.Image = image;
+            PictureBox pb = new PictureBox
+            {
+                Name = "PictureBox1",
+                Size = new Size(460, 460),
+                Location = new Point(402, 150),
+                SizeMode = PictureBoxSizeMode.StretchImage,
+                ImageLocation = image
+            };
             splitContainer1.Panel1.Controls.Add(pb);
 
             Panel[] pan = new Panel[przetasowane.Length];
@@ -279,24 +282,28 @@ namespace Play_with_English
 
             for (int i = 0; i < przetasowane.Length; i++)
             {
-                pan[i] = new Panel();
-                pan[i].Size = new Size(60, 60);
-                pan[i].BorderStyle = BorderStyle.Fixed3D;
-                pan[i].Name = "Panel" + (i+2);
-                pan[i].Tag = odpowiedz[i].ToString();  // przypisanie odpowiedniej litery do danego panelu
-                pan[i].AllowDrop = true;    // obszar docelowy przeciagania
+                pan[i] = new Panel
+                {
+                    Size = new Size(60, 60),
+                    BorderStyle = BorderStyle.Fixed3D,
+                    Name = "Panel" + (i + 2),
+                    Tag = odpowiedz[i].ToString(),  // przypisanie odpowiedniej litery do danego panelu
+                    AllowDrop = true    // obszar docelowy przeciagania
+                };
                 pan[i].DragEnter += new DragEventHandler(pan_DragEnter);
                 pan[i].DragDrop += new DragEventHandler(pan2_DragDrop);
 
-                lab[i] = new Label();
-                lab[i].Size = new Size(60, 60);
-                lab[i].Font = new Font("Arial", 20);
-                lab[i].TextAlign = ContentAlignment.MiddleCenter;
-                lab[i].BorderStyle = BorderStyle.FixedSingle;
-                lab[i].BackColor = System.Drawing.Color.White;
-                lab[i].Name = "Label" + (i + 1);
-                lab[i].Text = przetasowane[i].ToString();   // przypisanie losowej litery z podpisu obrazka do etykiety
-                lab[i].Location = new Point(50 + 300 * i, 50);
+                lab[i] = new Label
+                {
+                    Size = new Size(60, 60),
+                    Font = new Font("Arial", 20),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    BorderStyle = BorderStyle.FixedSingle,
+                    BackColor = Color.White,
+                    Name = "Label" + (i + 1),
+                    Text = przetasowane[i].ToString(),   // przypisanie losowej litery z podpisu obrazka do etykiety
+                    Location = new Point(50 + 300 * i, 50)
+                };
                 lab[i].MouseDown += new MouseEventHandler(lab2_MouseDown);   // uruchomienie przeciagania po wcisnieciu myszki
 
                 if (przetasowane.Length % 2 == 0)           // rozmieszczenie dla parzystej liczby paneli i etykiet
@@ -554,7 +561,9 @@ namespace Play_with_English
             Form inf = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku
 
             inf.Close();
+            inf.Dispose();
             this.Close();
+            this.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku powtorzenia etapu testu
@@ -568,7 +577,9 @@ namespace Play_with_English
             this.Hide();                    // ukrycie formy etapu testu
             testForm.ShowDialog();
             inf.Close();
+            inf.Dispose();
             this.Close();
+            this.Dispose();
         }
 
         // Metoda odpowiedzialna za utworzenie menu i wprowadzenie przyciskow funkcyjnych
@@ -580,28 +591,36 @@ namespace Play_with_English
             flp.Location = new Point(1263 - Menu.Width, Menu.Height + 2);
             flp.BorderStyle = BorderStyle.FixedSingle;
 
-            Button wyniki = new Button();
-            wyniki.Text = "Wyniki";
-            wyniki.Location = new Point(0, 0);
-            wyniki.Size = new Size(Menu.Width - 15, 30);
+            Button wyniki = new Button
+            {
+                Text = "Wyniki",
+                Location = new Point(0, 0),
+                Size = new Size(Menu.Width - 15, 30)
+            };
             wyniki.Click += new EventHandler(wyniki_Click);
 
-            Button pomoc = new Button();
-            pomoc.Text = "Pomoc";
-            pomoc.Location = new Point(0, wyniki.Height);
-            pomoc.Size = new Size(Menu.Width - 15, 30);
+            Button pomoc = new Button
+            {
+                Text = "Pomoc",
+                Location = new Point(0, wyniki.Height),
+                Size = new Size(Menu.Width - 15, 30)
+            };
             pomoc.Click += new EventHandler(pomoc_Click);
 
-            Button powrot = new Button();
-            powrot.Text = "Powrót do okna startowego";
-            powrot.Location = new Point(0, wyniki.Height * 2);
-            powrot.Size = new Size(Menu.Width - 15, 50);
+            Button powrot = new Button
+            {
+                Text = "Powrót do okna startowego",
+                Location = new Point(0, wyniki.Height * 2),
+                Size = new Size(Menu.Width - 15, 50)
+            };
             powrot.Click += new EventHandler(powrot_Click);
 
-            Button wyjscie = new Button();
-            wyjscie.Text = "Wyjście";
-            wyjscie.Location = new Point(0, wyniki.Height * 3 + 20);
-            wyjscie.Size = new Size(Menu.Width - 15, 30);
+            Button wyjscie = new Button
+            {
+                Text = "Wyjście",
+                Location = new Point(0, wyniki.Height * 3 + 20),
+                Size = new Size(Menu.Width - 15, 30)
+            };
             wyjscie.Click += new EventHandler(wyjscie_Click);
 
             flp.Controls.Add(wyniki);
@@ -630,31 +649,37 @@ namespace Play_with_English
         // Metoda realizowana po wyborze przycisku wyswietlenia pomocy
         private void pomoc_Click(object sender, EventArgs e)
         {
-            Form pom = new Form();
-            pom.Size = new Size(600, 400);
-            pom.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            pom.MaximizeBox = false;
-            pom.MinimizeBox = false;
-            pom.Text = "Play with English";
-            pom.FormBorderStyle = FormBorderStyle.FixedDialog;
-            pom.ControlBox = false;      // usuniecie przycisku zamykania okna
+            Form pom = new Form
+            {
+                Size = new Size(600, 400),
+                StartPosition = FormStartPosition.CenterParent,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                Text = "Play with English",
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                ControlBox = false      // usuniecie przycisku zamykania okna
+            };
 
-            Label tekst = new Label();
-            tekst.Text = "Test składa się z 4 pytań - po 2 pytania do 2 typów odpowiedzi. Pierwszy typ odpowiedzi opiera się na "
+            Label tekst = new Label
+            {
+                Text = "Test składa się z 4 pytań - po 2 pytania do 2 typów odpowiedzi. Pierwszy typ odpowiedzi opiera się na "
                 + "przeciąganiu angielskich nazw odpowiadających przedstawionym obrazkom. Natomiast drugi typ odpowiedzi opiera się "
                 + "przeciąganiu bloczków z pojedynczymi literami, tak aby utworzyły poprawne słowo odpowiadające przedstawionemu "
                 + "obrazkowi. Za poprawną odpowiedź otrzymuje się +1, a za błędną -1 punkt (przy czym wynik nie może być niższy niż 0). "
                 + "Maksymalna liczba punktów do uzyskania w teście wynosi 10 punktów. Należy pamiętać, że opuszczenie testu przed jego "
-                + "ukończeniem skutkuje wynikiem 0. Powodzenia!";
-            tekst.Font = new Font("Arial", 14);
-            tekst.TextAlign = ContentAlignment.MiddleCenter;
-            tekst.Location = new Point(10, 10);
-            tekst.Size = new Size(550, 265);
+                + "ukończeniem skutkuje wynikiem 0. Powodzenia!",
+                Font = new Font("Arial", 14),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(10, 10),
+                Size = new Size(550, 265)
+            };
 
-            Button ok = new Button();
-            ok.Text = "Ok";
-            ok.Location = new Point(240, 300);
-            ok.Size = new Size(100, 30);
+            Button ok = new Button
+            {
+                Text = "Ok",
+                Location = new Point(240, 300),
+                Size = new Size(100, 30)
+            };
             ok.Click += new EventHandler(ok_Click);
 
             pom.Controls.Add(tekst);
@@ -669,38 +694,47 @@ namespace Play_with_English
             Form par = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku (oknie pomocy)
 
             par.Close();    // zamkniecie okna pomocy
+            par.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku powrotu
         private void powrot_Click(object sender, EventArgs e)
         {
-            Form uwaga = new Form();
-            uwaga.Size = new Size(600, 350);
-            uwaga.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            uwaga.MaximizeBox = false;
-            uwaga.MinimizeBox = false;
-            uwaga.Text = "Play with English";
-            uwaga.FormBorderStyle = FormBorderStyle.FixedDialog;
-            uwaga.ControlBox = false;      // usuniecie przycisku zamykania okna
+            Form uwaga = new Form
+            {
+                Size = new Size(600, 350),
+                StartPosition = System.Windows.Forms.FormStartPosition.CenterParent,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                Text = "Play with English",
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                ControlBox = false      // usuniecie przycisku zamykania okna
+            };
 
-            Label tekst = new Label();
-            tekst.Text = "Uwaga! Jeżeli zdecydujesz się na wyjście przed ukończeniem testu, Twój wynik w tym podejściu wyniesie 0. "
-                + "Czy jesteś pewien, że chcesz zakończyć teraz test?";
-            tekst.Font = new Font("Arial", 14);
-            tekst.TextAlign = ContentAlignment.MiddleCenter;
-            tekst.Location = new Point(10, 10);
-            tekst.Size = new Size(550, 100);
+            Label tekst = new Label
+            {
+                Text = "Uwaga! Jeżeli zdecydujesz się na wyjście przed ukończeniem testu, Twój wynik w tym podejściu wyniesie 0. "
+                + "Czy jesteś pewien, że chcesz zakończyć teraz test?",
+                Font = new Font("Arial", 14),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(10, 10),
+                Size = new Size(550, 100)
+            };
 
-            Button tak = new Button();
-            tak.Text = "Tak";
-            tak.Location = new Point(115, 200);
-            tak.Size = new Size(150, 75);
+            Button tak = new Button
+            {
+                Text = "Tak",
+                Location = new Point(115, 200),
+                Size = new Size(150, 75)
+            };
             tak.Click += new EventHandler(tak_Click);
 
-            Button anuluj = new Button();
-            anuluj.Text = "Anuluj";
-            anuluj.Location = new Point(325, 200);
-            anuluj.Size = new Size(150, 75);
+            Button anuluj = new Button
+            {
+                Text = "Anuluj",
+                Location = new Point(325, 200),
+                Size = new Size(150, 75)
+            };
             anuluj.Click += new EventHandler(ok_Click);
 
             uwaga.Controls.Add(tekst);
@@ -718,39 +752,49 @@ namespace Play_with_English
             Form par = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku (oknie ostrzezenia)
 
             par.Close();    // zamkniecie okna ostrzezenia
+            par.Dispose();
             this.Close();   // zamkniecie okna etapu nauki
+            this.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku wyjscie
         private void wyjscie_Click(object sender, EventArgs e)
         {
-            Form uwaga = new Form();
-            uwaga.Size = new Size(600, 350);
-            uwaga.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            uwaga.MaximizeBox = false;
-            uwaga.MinimizeBox = false;
-            uwaga.Text = "Play with English";
-            uwaga.FormBorderStyle = FormBorderStyle.FixedDialog;
-            uwaga.ControlBox = false;      // usuniecie przycisku zamykania okna
+            Form uwaga = new Form
+            {
+                Size = new Size(600, 350),
+                StartPosition = System.Windows.Forms.FormStartPosition.CenterParent,
+                MaximizeBox = false,
+                MinimizeBox = false,
+                Text = "Play with English",
+                FormBorderStyle = FormBorderStyle.FixedDialog,
+                ControlBox = false      // usuniecie przycisku zamykania okna
+            };
 
-            Label tekst = new Label();
-            tekst.Text = "Uwaga! Jeżeli zdecydujesz się na wyjście przed ukończeniem testu, Twój wynik w tym podejściu wyniesie 0. "
-                + "Czy jesteś pewien, że chcesz zakończyć teraz test?";
-            tekst.Font = new Font("Arial", 14);
-            tekst.TextAlign = ContentAlignment.MiddleCenter;
-            tekst.Location = new Point(10, 10);
-            tekst.Size = new Size(550, 100);
+            Label tekst = new Label
+            {
+                Text = "Uwaga! Jeżeli zdecydujesz się na wyjście przed ukończeniem testu, Twój wynik w tym podejściu wyniesie 0. "
+                + "Czy jesteś pewien, że chcesz zakończyć teraz test?",
+                Font = new Font("Arial", 14),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Location = new Point(10, 10),
+                Size = new Size(550, 100)
+            };
 
-            Button tak = new Button();
-            tak.Text = "Tak";
-            tak.Location = new Point(115, 200);
-            tak.Size = new Size(150, 75);
+            Button tak = new Button
+            {
+                Text = "Tak",
+                Location = new Point(115, 200),
+                Size = new Size(150, 75)
+            };
             tak.Click += new EventHandler(tak1_Click);
 
-            Button anuluj = new Button();
-            anuluj.Text = "Anuluj";
-            anuluj.Location = new Point(325, 200);
-            anuluj.Size = new Size(150, 75);
+            Button anuluj = new Button
+            {
+                Text = "Anuluj",
+                Location = new Point(325, 200),
+                Size = new Size(150, 75)
+            };
             anuluj.Click += new EventHandler(ok_Click);
 
             uwaga.Controls.Add(tekst);
@@ -768,6 +812,7 @@ namespace Play_with_English
             Form par = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku (oknie ostrzezenia)
 
             par.Close();    // zamkniecie okna ostrzezenia
+            par.Dispose();
             System.Environment.Exit(0);     // zamkniecie aplikacji
         }
     }
