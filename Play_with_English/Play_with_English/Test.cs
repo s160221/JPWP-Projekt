@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Xml.Serialization;
 
 namespace Play_with_English
 {
@@ -43,33 +44,70 @@ namespace Play_with_English
             Form1.reOpen = false;       // powrot do stanu pierwotnego - wymazanie statusu ponownego otwarcia okna
             etap = 1;                   // rozpoczecie od pierwszego etapu
 
-            //OrderedDictionary odict = new OrderedDictionary();
-
-            string fullPath = Path.GetFullPath(kategoria);      // wyszukanie folderu zawierajacego elementy z zadanej dla testu kategorii
-
-            string[] zdjecia = Directory.GetFiles(fullPath);    // zapisanie sciezek do poszczegolnych obrazow
-            string nazwa;   // kontener na wartosci slownika
-
-            foreach (var naz in zdjecia)
+            if (kategoria == "TestGlowny")  // jezeli wybrano test glowny
             {
-                Bitmap bmp = null;
+                List<string> listaZdjec = new List<string>();   // lista na zdjecia dla testu glownego
+                string nazwa;   // kontener na wartosci slownika
 
-                try
+                foreach (kategorie kat in Enum.GetValues(typeof(kategorie)))    // iterowanie po wszystkich kategoriach
                 {
-                    bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
-                    nazwa = naz.Split('.')[0];
-                    nazwa = nazwa.Split('\\').Last();   // zebranie nazwy pliku jako klucza
-                    nazwa = char.ToUpper(nazwa[0]) + nazwa.Substring(1);    // zamiana pierwszej litery na wielka
-                }
-                catch (Exception e)
-                {
-                    MessageBox.Show(e.Message);
-                    continue;
+                    if (kat.ToString() != "TestGlowny")
+                    {
+                        string fullPath = Path.GetFullPath(kat.ToString());      // wyszukanie folderu zawierajacego elementy z zadanej kategorii
+                        listaZdjec.AddRange(Directory.GetFiles(fullPath));       // dodanie danej kategorii do listy
+                    }
                 }
 
-                dict.Add(bmp, nazwa);
+                foreach (var naz in listaZdjec)
+                {
+                    Bitmap bmp = null;
+
+                    try
+                    {
+                        bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
+                        nazwa = naz.Split('.')[0];
+                        nazwa = nazwa.Split('\\').Last();   // zebranie nazwy pliku jako klucza
+                        nazwa = nazwa.Split('_')[0];
+                        nazwa = char.ToUpper(nazwa[0]) + nazwa.Substring(1);    // zamiana pierwszej litery na wielka
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                        continue;
+                    }
+
+                    dict.Add(bmp, nazwa);
+                }
             }
+            else                             // jezeli wybrano inny test
+            {
+                string fullPath = Path.GetFullPath(kategoria);      // wyszukanie folderu zawierajacego elementy z zadanej dla testu kategorii
 
+                string[] zdjecia = Directory.GetFiles(fullPath);    // zapisanie sciezek do poszczegolnych obrazow
+                string nazwa;   // kontener na wartosci slownika
+
+                foreach (var naz in zdjecia)
+                {
+                    Bitmap bmp = null;
+
+                    try
+                    {
+                        bmp = new Bitmap(naz);    // utworzenie bitmapy na podstawie sciezki
+                        nazwa = naz.Split('.')[0];
+                        nazwa = nazwa.Split('\\').Last();   // zebranie nazwy pliku jako klucza
+                        nazwa = nazwa.Split('_')[0];
+                        nazwa = char.ToUpper(nazwa[0]) + nazwa.Substring(1);    // zamiana pierwszej litery na wielka
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show(e.Message);
+                        continue;
+                    }
+
+                    dict.Add(bmp, nazwa);
+                }
+            }
+            
             Random losuj = new Random();
             dict = dict.OrderBy(x => losuj.Next()).Take(10).ToDictionary(elem => elem.Key, elem => elem.Value);    // przetasowanie elementow w slowniku
             //dict = dict.Take(10).ToDictionary(elem => elem.Key, elem => elem.Value);                             // wziecie 10 elementow (warunek dla testu glownego)
@@ -438,29 +476,7 @@ namespace Play_with_English
         // Metoda realizowana po odpowiedzi na wszystkie pytania
         private void EndTestPart()
         {
-            // DODAC ZAPISYWANIE WYNIKOW DO PLIKU!!!
-
-            /*FormCollection fc = Application.OpenForms;  // utworzenie kolekcji form
-            Control f = null;   // utworzenie obiektu na przechowanie formy
-
-            for (int i = 0; i < fc.Count; i++)
-            {
-                if (fc[i].Name == "Form1")      // pobieranie danych Form1
-                {
-                    f = fc[i];
-                    break;
-                }
-            }
-
-            foreach (Control c in f.Controls)
-            {
-                if (kategoria == (string)c.Tag)
-                {
-                    c.Visible = true;
-                }
-            } */
-
-
+            ZapisywanieWyniku();
 
             // utworzenie okna
             Form informacja = new Form();
@@ -500,6 +516,37 @@ namespace Play_with_English
             informacja.ShowDialog();
         }
 
+        // Metoda realizowana po odpowiedzi na wszystkie pytania
+        private void ZapisywanieWyniku()
+        {
+            Wyniki wyniki = null;   // do przechowywania obiektow klasy Wynik
+
+            string path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + "//Wyniki.xml"; // sciezka do pliku z danymi
+            XmlSerializer serializer = new XmlSerializer(typeof(Wyniki));   // obiekt odpowiadajacy serializacje i deserializacje danych
+            StreamReader reader = new StreamReader(path);   // wczytanie z pliku o zadanej sciezce
+
+            wyniki = (Wyniki)serializer.Deserialize(reader);    // pobranie danych z drzewa xml do listy wynikow
+            reader.Close();
+
+            foreach (Wynik w in wyniki.listaWynikow)
+            {
+                if (w.kategoria.ToString() == kategoria)    // wyszukanie elementu z zadanej kategorii
+                {
+                    if (w.wynikTestu < wynik)
+                    {
+                        w.wynikTestu = wynik;       // zaktualizowanie wyniku, jezeli uzyskano wyzszy
+                    }
+
+                    w.odblokowane = true;
+                    break;
+                }
+            }
+
+            FileStream fs = File.Create(path);  // nadpisanie pliku o zadanej sciezce
+            serializer.Serialize(fs, wyniki);   // utworzenie drzewa xml ze zaktualizowanymi danymi obiektow klasy Wynik
+            fs.Close();
+        }
+
         // Metoda realizowana po wyborze przycisku powrotu do ekranu glownego
         private void koniec_Click(object sender, EventArgs e)
         {
@@ -510,7 +557,7 @@ namespace Play_with_English
             this.Close();
         }
 
-        // Metoda realizowana po wyborze przycisku powtorzenia etapu nauki
+        // Metoda realizowana po wyborze przycisku powtorzenia etapu testu
         private void powtorz_Click(object sender, EventArgs e)
         {
             Button btn = (Button)sender;    // pobranie informacji o przycisku
@@ -577,7 +624,7 @@ namespace Play_with_English
         // Metoda realizowana po wyborze przycisku wyswietlenia wynikow
         private void wyniki_Click(object sender, EventArgs e)
         {
-            // Uzupelnic!!!
+            Plik.Odczyt();
         }
 
         // Metoda realizowana po wyborze przycisku wyswietlenia pomocy

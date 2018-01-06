@@ -226,8 +226,25 @@ namespace Play_with_English
         // Metoda odblokowywujaca przyciski testow, ktore zostaly juz ukonczone
         private void Odblokowywanie()
         {
+            bool odblTestuGlownego = true;     // czy test glowny zostal odblokowany
+
             foreach (Wynik w in wyniki.listaWynikow)
             {
+                if (w.kategoria != kategorie.TestGlowny)
+                {
+                    if (w.wynikTestu < 8)
+                    {
+                        odblTestuGlownego = false;  // jezeli ktorys z wynikow jest mniejszy od 8, to test glowny jest zablokowany
+                    }
+                }
+                else
+                {
+                    if (odblTestuGlownego)
+                    {
+                        w.odblokowane = true;   // jezeli wszystkie wyniki byly na poziomie co najmniej 80%, to test glowny jest odblokowany
+                    }
+                }
+
                 if (w.odblokowane)
                 {
 
@@ -289,51 +306,7 @@ namespace Play_with_English
         // Metoda realizowana po wyborze przycisku wyswietlenia wynikow
         private void wyniki_Click(object sender, EventArgs e)
         {
-            Odczyt();
-
-            Form wyn = new Form();
-            wyn.Size = new Size(600, 500);
-            wyn.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
-            wyn.MaximizeBox = false;
-            wyn.MinimizeBox = false;
-            wyn.Text = "Play with English";
-            wyn.FormBorderStyle = FormBorderStyle.FixedDialog;
-            wyn.ControlBox = false;      // usuniecie przycisku zamykania okna
-
-            Label tekst = new Label();
-
-            foreach (Wynik w in wyniki.listaWynikow)
-            {
-                if (w.kategoria.ToString() == "OwoceIWarzywa")
-                {
-                    tekst.Text += "Wynik z kategorii Owoce i Warzywa wynosi: " + w.wynikTestu + " punktów (" + (w.wynikTestu * 10) + "%). \n";
-                }
-                if (w.kategoria.ToString() == "TestGlowny")
-                {
-                    tekst.Text += "Wynik z Testu Głównego wynosi: " + w.wynikTestu + " punktów (" + (w.wynikTestu * 10) + "%). \n";
-                }
-                else
-                {
-                    tekst.Text += "Wynik z kategorii " + w.kategoria.ToString() + " wynosi: " + w.wynikTestu + " punktów (" + (w.wynikTestu * 10) + "%). \n";
-                }
-                
-            }
-
-            tekst.Font = new Font("Arial", 14);
-            tekst.TextAlign = ContentAlignment.MiddleCenter;
-            tekst.Location = new Point(10, 10);
-            tekst.Size = new Size(550, 365);
-
-            Button ok = new Button();
-            ok.Text = "Ok";
-            ok.Location = new Point(240, 400);
-            ok.Size = new Size(100, 30);
-            ok.Click += new EventHandler(ok_Click);
-
-            wyn.Controls.Add(tekst);
-            wyn.Controls.Add(ok);
-            wyn.ShowDialog();
-
+            Plik.Odczyt();
         }
 
         // Metoda realizowana po wyborze przycisku wyswietlenia pomocy
@@ -377,6 +350,7 @@ namespace Play_with_English
             Form par = (Form)btn.Parent;    // pobranie informacji o formie bedacej rodzicem przycisku (oknie pomocy)
 
             par.Close();    // zamkniecie okna pomocy
+            par.Dispose();
         }
 
         // Metoda realizowana po wyborze przycisku wyjscie

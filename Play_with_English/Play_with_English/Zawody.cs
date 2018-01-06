@@ -610,7 +610,7 @@ namespace Play_with_English
         // Metoda realizowana po wyborze przycisku wyswietlenia wynikow
         private void wyniki_Click(object sender, EventArgs e)
         {
-            // Uzupelnic!!!
+            Plik.Odczyt();
         }
 
         // Metoda realizowana po wyborze przycisku wyswietlenia pomocy
