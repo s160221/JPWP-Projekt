@@ -240,9 +240,9 @@
             // 
             // Menu
             // 
-            this.Menu.BackColor = System.Drawing.Color.Black;
-            this.Menu.ImageLocation = "E:\\GitHub\\JPWP-Projekt\\Play_with_English\\Play_with_English\\bin\\Debug\\Tlo\\menu1.pn" +
-    "g";
+            this.Menu.BackColor = System.Drawing.Color.Transparent;
+            this.Menu.Image = global::Play_with_English.Properties.Resources.menu1;
+            this.Menu.ImageLocation = "";
             this.Menu.InitialImage = null;
             this.Menu.Location = new System.Drawing.Point(518, 1);
             this.Menu.Name = "Menu";
